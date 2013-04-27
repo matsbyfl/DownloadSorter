@@ -158,7 +158,6 @@ public class InputData {
             FileUtils.touch(new File(parentDir, "THE VETERAN [2011] DVD Rip Xvid [StB]"));
             FileUtils.touch(new File(parentDir, "Taken.2.2012.RETAIL.DVDRIP.XVID.AC3.5.1-26K"));
 
-
             System.out.println("PAth" + path + " am I ? " + Files.exists(path));
             FileUtils.deleteDirectory(parentDir);
 
