@@ -2,23 +2,26 @@ package net.byfuglien.torrentsorter;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created with IntelliJ IDEA.
- * User: mats
- * Date: 4/16/13
- * Time: 7:53 PM
- * To change this template use File | Settings | File Templates.
- */
 public class TestMain {
 
 
     @Test
-    public void testTest() {
-        assertTrue(true);
-        InputData id = new InputData();
-        id.buildTestDataStructure();
+    public void testMainNOArguments() {
+        RunMain(new String[]{});
+        RunMain(new String[]{"FirstArg", "SecondArg", "ThirdArg"});
+        TorrentSorter.main(new String[]{"FirstArg", "SecondArg"});
+    }
+
+    private void RunMain(String[] args) {
+        try {
+            TorrentSorter.main(args);
+        } catch (RuntimeException re) {
+            assertNotNull(re);
+            assertTrue(re.getMessage().contains("Missing parameters"));
+        }
     }
 
 }

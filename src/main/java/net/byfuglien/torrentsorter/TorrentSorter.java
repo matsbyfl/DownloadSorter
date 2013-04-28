@@ -1,14 +1,17 @@
 package net.byfuglien.torrentsorter;
 
-/**
- * Created with IntelliJ IDEA.
- * User: mats
- * Date: 4/16/13
- * Time: 7:49 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class TorrentSorter {
     public static void main(String[] args) {
+        System.out.println("length " + args.length);
+
+        if (args.length != 2) {
+            throw new RuntimeException("Missing parameters, need both source and target folder\nUsage: java TorrentSorter <srcFolder> <targetFolder>");
+        }
+
+
+
+
         /*
         * Src og dest som inputparametre
         * Iterere over src mappen
