@@ -9,7 +9,7 @@ public class TestMain {
 
 
     @Test
-    public void testMainNOArguments() {
+    public void testMain() {
         RunMain(new String[]{});
         RunMain(new String[]{"FirstArg", "SecondArg", "ThirdArg"});
         TorrentSorter.main(new String[]{"FirstArg", "SecondArg"});

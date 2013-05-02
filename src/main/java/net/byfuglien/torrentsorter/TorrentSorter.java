@@ -2,17 +2,16 @@ package net.byfuglien.torrentsorter;
 
 
 import com.google.common.collect.Lists;
-import org.apache.commons.io.FileUtils;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class TorrentSorter {
     public static void main(String[] args) {
-        System.out.println("length " + args.length);
+        System.out.printf("length %d%n", args.length);
 
-        List<String> tvshows = Lists.newArrayList();
+        List<File> tvshows = Lists.newArrayList();
 
         if (args.length != 2) {
             throw new RuntimeException("Missing parameters, need both source and target folder\nUsage: java TorrentSorter <srcFolder> <targetFolder>");
@@ -21,10 +20,10 @@ public class TorrentSorter {
         File sourceDir = new File(args[0]);
         File destinationDir = new File(args[1]);
 
-        if( sourceDir.isDirectory() ) {
+        if (sourceDir.isDirectory()) {
             for (File file : sourceDir.listFiles()) {
-                if( isTvShow(file)){
-
+                if (isTvShow(file)) {
+                    tvshows.add(file);
                 }
 
 
@@ -50,7 +49,17 @@ public class TorrentSorter {
     }
 
     private static boolean isTvShow(File file) {
-        return false;
+        List<String> showPatterns = Lists.newArrayList();
+
+        boolean match = false;
+        showPatterns.add("(.*)season(.*)");
+        showPatterns.add(".(*)s[\\d{2}](.*)e[0-9*2](.*)");
+
+        for (String showPattern : showPatterns) {
+            match = Pattern.matches(showPattern, file.getName());
+        }
+
+        return match;
 
     }
 }
