@@ -1,9 +1,13 @@
 package net.byfuglien.torrentsorter;
 
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import com.sun.istack.internal.Nullable;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -17,18 +21,19 @@ public class TorrentSorter {
             throw new RuntimeException("Missing parameters, need both source and target folder\nUsage: java TorrentSorter <srcFolder> <targetFolder>");
         }
 
+
         File sourceDir = new File(args[0]);
         File destinationDir = new File(args[1]);
 
-        if (sourceDir.isDirectory()) {
-            for (File file : sourceDir.listFiles()) {
-                if (isTvShow(file)) {
-                    tvshows.add(file);
-                }
-
-
-            }
-        }
+//        if (sourceDir.isDirectory()) {
+//            for (File file : sourceDir.listFiles()) {
+//                if (isTvShow(file)) {
+//                    tvshows.add(file);
+//                }
+//
+//
+//            }
+//        }
 
 
 
@@ -48,18 +53,27 @@ public class TorrentSorter {
         * */
     }
 
-    private static boolean isTvShow(File file) {
-        List<String> showPatterns = Lists.newArrayList();
 
-        boolean match = false;
+    protected static Collection<File> getTvShows(List<File> files) {
+
+        final List<String> showPatterns = Lists.newArrayList();
+
+        //boolean match = false;
         showPatterns.add("(.*)season(.*)");
-        showPatterns.add(".(*)s[\\d{2}](.*)e[0-9*2](.*)");
+        showPatterns.add("(.*)s[\\d{2}](.*)e[\\d{2}](.*)");
 
-        for (String showPattern : showPatterns) {
-            match = Pattern.matches(showPattern, file.getName());
-        }
-
-        return match;
-
+        Collection<File> tvShows = Collections2.filter(files, new Predicate<File>() {
+            @Override
+            public boolean apply(@Nullable File f) {
+                for (String showPattern : showPatterns) {
+                    //System.out.println("showPattern + f.getName().toLowerCase() = " + showPattern + " " + f.getName().toLowerCase());
+                    if (Pattern.matches(showPattern, f.getName().toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        return tvShows;
     }
 }
