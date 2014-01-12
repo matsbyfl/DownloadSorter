@@ -15,12 +15,11 @@ public class TestMain {
     public void testMain() {
         RunMain(new String[]{});
         RunMain(new String[]{"FirstArg", "SecondArg", "ThirdArg"});
-        TorrentSorter.main(new String[]{"FirstArg", "SecondArg"});
     }
 
 
 
-    @WrittenWhile("Watching Ameazing race on TV")
+    @WrittenWhile("Watching Amazing race on TV")
     private void RunMain(String[] args) {
         try {
             TorrentSorter.main(args);

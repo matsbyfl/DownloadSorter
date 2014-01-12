@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class TorrentSorter {
     public static void main(String[] args) {
 
+        System.out.println("args.length = " + args.length);
         if (args.length != 2) {
             throw new RuntimeException("Missing parameters, need both source and target folder\nUsage: java TorrentSorter <srcFolder> <targetFolder>");
         }
