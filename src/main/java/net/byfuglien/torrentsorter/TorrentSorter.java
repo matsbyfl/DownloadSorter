@@ -1,6 +1,7 @@
 package net.byfuglien.torrentsorter;
 
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
@@ -16,10 +17,7 @@ import java.util.regex.Pattern;
 public class TorrentSorter {
     public static void main(String[] args) {
 
-        System.out.println("args.length = " + args.length);
-        if (args.length != 2) {
-            throw new RuntimeException("Missing parameters, need both source and target folder\nUsage: java TorrentSorter <srcFolder> <targetFolder>");
-        }
+        validateInputArguments(args);
 
         File sourceDir = new File(args[0]);
         File destinationDir = new File(args[1]);
@@ -42,6 +40,19 @@ public class TorrentSorter {
         * */
     }
 
+    private static void validateInputArguments(String[] args) {
+        System.out.println("args.length = " + args.length);
+        if (args.length != 2) {
+            throw new RuntimeException("Missing parameters, need both source and target folder\n" +
+                    "Usage: java TorrentSorter <srcFolder> <targetFolder>");
+        }
+    }
+
+    protected Boolean isDryRunModeSet() {
+        String dryrunProperty = System.getProperty("dryrunEnabled");
+        return dryrunProperty != null ? Boolean.valueOf(dryrunProperty) : false;
+    }
+
     protected void moveFiles(Collection<File> files, File destinationDir) {
         for( File file : files) {
             try {
@@ -55,7 +66,7 @@ public class TorrentSorter {
 
 
     protected Collection<File> getTvShows(List<File> files) {
-
+//heu
         final List<String> showPatterns = Lists.newArrayList();
         showPatterns.add("(.*)season(.*)");
         showPatterns.add("(.*)s[\\d{2}](.*)e[\\d{2}](.*)");
